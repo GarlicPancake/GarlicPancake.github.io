@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evan Simmons</title>
+  <meta name="description" content="Graduate student, IT educator and future professor.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,680;1,9..144,520&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #10243f;
+      --blue-deep: #091422;
+      --buff: #e4b53c;
+      --buff-deep: #c49216;
+      --cream: #f6f1e6;
+      --paper: #fffdf8;
+      --ink: #1c1915;
+      --muted: #5c564c;
+      --brick: #8d3e34;
+      --line: rgba(28, 25, 21, 0.12);
+      --led: #3dcc78;
+      --nav-h: 4.25rem;
+      --serif: "Fraunces", "Iowan Old Style", Palatino, "Palatino Linotype", serif;
+      --sans: "Outfit", "Avenir Next", "Segoe UI", sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+      --wrap: 72rem;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--nav-h) + 0.75rem);
+    }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--brick);
+      outline-offset: 3px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .wrap {
+      width: min(var(--wrap), calc(100% - 2.5rem));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      background: rgba(246, 241, 230, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+
+    .site-header.is-scrolled {
+      border-bottom-color: var(--line);
+      box-shadow: 0 10px 30px rgba(9, 20, 34, 0.06);
+    }
+
+    .nav {
+      width: min(var(--wrap), calc(100% - 2.5rem));
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-family: var(--serif);
+      font-weight: 680;
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
+      text-decoration: none;
+      color: var(--blue);
+    }
+
+    .brand span {
+      color: var(--buff-deep);
+    }
+
+    .nav-toggle {
+      width: 2.75rem;
+      height: 2.75rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 1rem;
+      height: 1.5px;
+      background: var(--blue);
+      transition: transform 0.25s var(--ease), opacity 0.2s;
+    }
+
+    .nav-toggle[aria-expanded="true"] span:first-child {
+      transform: translateY(3.25px) rotate(45deg);
+    }
+
+    .nav-toggle[aria-expanded="true"] span:last-child {
+      transform: translateY(-3.25px) rotate(-45deg);
+    }
+
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .nav-links a[aria-current="page"] {
+      color: var(--brick);
+    }
+
+    .hero {
+      position: relative;
+      background: var(--blue);
+      color: var(--cream);
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      position: relative;
+      width: min(var(--wrap), calc(100% - 2.5rem));
+      margin-inline: auto;
+      padding: 2rem 0;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 680;
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .tagline {
+      max-width: 18em;
+      margin: 0.75rem 0 0;
+      font-family: var(--serif);
+      font-weight: 520;
+      font-style: italic;
+      font-size: clamp(1.25rem, 2.4vw, 1.85rem);
+      line-height: 1.35;
+      color: #f3ead6;
+    }
+
+    section {
+      padding: 5rem 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brick);
+    }
+
+    .band .eyebrow {
+      color: var(--buff);
+    }
+
+    h2 {
+      margin: 0 0 1.5rem;
+      font-family: var(--serif);
+      font-weight: 680;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      line-height: 1;
+      letter-spacing: -0.035em;
+    }
+
+    .about-grid {
+      display: grid;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .portrait {
+      margin: 0;
+      padding: 0.7rem;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: 0.85rem 0.85rem 0 var(--buff);
+    }
+
+    .portrait img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .bio p {
+      margin: 0 0 1rem;
+      color: var(--ink);
+    }
+
+    .bio p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .bio .btn {
+      margin-top: 1.5rem;
+    }
+
+    .band {
+      background:
+        radial-gradient(circle at 90% 10%, rgba(228, 181, 60, 0.12), transparent 28%),
+        var(--blue);
+      color: var(--cream);
+    }
+
+    .band h2 {
+      color: var(--cream);
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
+    }
+
+    .matrix {
+      position: relative;
+      height: 9.5rem;
+      background:
+        radial-gradient(circle, rgba(228, 181, 60, 0.55) 1px, transparent 1.3px),
+        #071018;
+      background-size: 10px 10px, auto;
+    }
+
+    .card-img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .live-dot {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 50%;
+      background: var(--led);
+      box-shadow: 0 0 0 4px rgba(61, 204, 120, 0.18);
+    }
+
+    .rows {
+      position: absolute;
+      left: 1rem;
+      right: 2.4rem;
+      bottom: 1.1rem;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .rows span {
+      display: block;
+      height: 0.45rem;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--buff), rgba(228, 181, 60, 0.2));
+    }
+
+    .rows span:nth-child(1) { width: 86%; }
+    .rows span:nth-child(2) { width: 64%; }
+    .rows span:nth-child(3) { width: 41%; }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.35rem 1.35rem 1.5rem;
+      flex: 1;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .card p {
+      margin: 0;
+    }
+
+    .tools-label {
+      margin: 0.25rem 0 0;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      list-style: none;
+      margin: 0.45rem 0 0;
+      padding: 0;
+    }
+
+    .tools li {
+      padding: 0.3rem 0.55rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--cream);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3rem;
+      margin-top: auto;
+      padding: 0.7rem 1.2rem;
+      width: fit-content;
+      border-radius: 999px;
+      background: var(--buff);
+      color: var(--blue-deep);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.25s var(--ease), background 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: #f0c85c;
+    }
+
+    .btn-navy {
+      background: var(--blue);
+      color: var(--cream);
+    }
+
+    .btn-navy:hover {
+      background: #1a365c;
+    }
+
+    .pair {
+      display: grid;
+      gap: 1rem;
+      padding-block: 4.5rem 5rem;
+    }
+
+    .panel {
+      padding: 1.75rem 1.75rem 1.9rem;
+      border-radius: 1.25rem;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.75rem;
+    }
+
+    .panel h2 {
+      margin-bottom: 0;
+    }
+
+    .panel-contact {
+      background: var(--blue);
+      color: var(--cream);
+      border-color: rgba(228, 181, 60, 0.35);
+    }
+
+    .panel-contact .eyebrow {
+      color: var(--buff);
+    }
+
+    .site-footer {
+      padding: 1.25rem 0 1.75rem;
+      background: var(--blue-deep);
+      color: #d9d0c0;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem 1.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--buff);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 759px) {
+      section {
+        padding: 3.5rem 0;
+      }
+
+      .pair {
+        padding-block: 3rem 3.5rem;
+      }
+
+      .panel {
+        padding: 1.5rem;
+      }
+
+      .portrait {
+        box-shadow: 0.5rem 0.5rem 0 var(--buff);
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.5rem 1.25rem 1.25rem;
+        background: var(--cream);
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 18px 30px rgba(9, 20, 34, 0.12);
+        transform: translateY(-0.5rem);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+      }
+
+      .nav-links.is-open {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 0.9rem 0.2rem;
+        font-size: 1.35rem;
+        font-family: var(--serif);
+        border-bottom: 1px solid var(--line);
+      }
+    }
+
+    @media (min-width: 760px) {
+      .nav-toggle {
+        display: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .nav-links a {
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -0.3rem;
+        width: 100%;
+        height: 2px;
+        background: var(--buff-deep);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.25s var(--ease);
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a[aria-current="page"]::after {
+        transform: scaleX(1);
+      }
+    }
+
+    @media (min-width: 860px) {
+      .about-grid {
+        grid-template-columns: minmax(16rem, 0.85fr) 1.15fr;
+        gap: 4rem;
+      }
+
+      .project-grid {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 32rem), 1fr));
+      }
+    }
+
+    @media (scripting: none) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .hero::before,
+      .reveal,
+      .btn,
+      .nav-links,
+      .nav-toggle span,
+      .nav-links a::after {
+        animation: none;
+        transition: none;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes matrix-drift {
+      to {
+        background-position: 16px 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Sections">
+      <a class="brand" href="#hero">Evan <span>Simmons</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <ul class="nav-links" id="site-nav">
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-inner">
+        <h1>
+          <span class="first">Evan</span>
+          <span class="last">Simmons</span>
+        </h1>
+        <p class="tagline">Graduate student, IT educator and future professor.</p>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap about-grid">
+        <figure class="portrait reveal">
+          <img src="profile.jpg" width="480" height="480" alt="Evan Simmons">
+        </figure>
+        <div class="bio reveal">
+          <p class="eyebrow">01</p>
+          <h2>About Me</h2>
+          <p>I'm a graduate student at George Washington University pursuing an MS in Information Systems Technology. I work at Northern Virginia Community College as an IT Lab Support Specialist and teaching assistant for Java and Python courses. Helping students debug their first programs is one of my favorite parts of the job. I'm interested in AI, data analytics and public transit tech, and I like building hardware projects like a live DC Metro arrival display. My goal is to become a professor. I'm also an Eagle Scout.</p>
+          <a class="btn btn-navy" href="resume.pdf">Download Resume</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="projects">
+      <div class="wrap">
+        <div class="reveal">
+          <p class="eyebrow">02</p>
+          <h2>Projects</h2>
+        </div>
+        <div class="project-grid">
+          <article class="card reveal">
+            <img class="card-img" src="metro-board.jpg" alt="My DC Metro arrival board">
+            <div class="card-body">
+              <h3>Live DC Metro Arrival Board</h3>
+              <p>A 64x32 LED display that shows the next three train arrivals for a Metro station. A MatrixPortal M4 pulls live data from the WMATA API through a small proxy server. A corner dot shows green for live data and red when cached.</p>
+              <p>Built with: MatrixPortal M4, CircuitPython, Python, WMATA API</p>
+              <a class="btn" href="https://github.com/GarlicPancake/GarlicPancake.github.io/tree/main/metro-board" target="_blank" rel="noopener noreferrer">View Code<span class="sr-only"> (opens in a new tab)</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap pair">
+      <section class="panel panel-contact reveal" id="contact">
+        <p class="eyebrow">03</p>
+        <h2>Contact</h2>
+        <a class="btn" href="https://www.linkedin.com/in/evan-simmons-059384208">LinkedIn</a>
+      </section>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>&copy; <span id="year">2026</span> Evan Simmons</span>
+      <span class="footer-links">
+        <a href="https://github.com/GarlicPancake" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/evan-simmons-059384208" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const header = document.querySelector(".site-header");
+    const toggle = document.querySelector(".nav-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    const sections = document.querySelectorAll("main section");
+    const links = document.querySelectorAll(".nav-links a");
+
+    function setMenu(open) {
+      navLinks.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+    }
+
+    toggle.addEventListener("click", () => {
+      setMenu(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    links.forEach((link) => {
+      link.addEventListener("click", () => setMenu(false));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setMenu(false);
+    });
+
+    const reveals = document.querySelectorAll(".reveal");
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    if (motion.matches) {
+      reveals.forEach((el) => el.classList.add("is-visible"));
+    } else if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+      reveals.forEach((el) => observer.observe(el));
+    } else {
+      reveals.forEach((el) => el.classList.add("is-visible"));
+    }
+
+    let ticking = false;
+
+    function onScroll() {
+      header.classList.toggle("is-scrolled", window.scrollY > 8);
+      const marker = window.scrollY + header.offsetHeight + 32;
+      let current = "";
+      sections.forEach((section) => {
+        if (section.offsetTop <= marker) current = section.id;
+      });
+      links.forEach((link) => {
+        if (link.getAttribute("href") === `#${current}`) {
+          link.setAttribute("aria-current", "page");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+      ticking = false;
+    }
+
+    window.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(onScroll);
+    }, { passive: true });
+
+    onScroll();
+  </script>
+</body>
+</html>
